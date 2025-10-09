@@ -166,7 +166,7 @@ img {
 .hero-section {
     height: 100vh;
     background: linear-gradient(rgba(5, 90, 53, 0.7), rgba(3, 61, 36, 0.8)), 
-                url('https://share.google/images/ARdqCNBEFkvGciCMA') center/cover;
+                url('/images/images.jpg') center/cover;
     display: flex;
     align-items: center;
     justify-content: center;
