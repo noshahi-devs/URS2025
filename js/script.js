@@ -147,6 +147,72 @@ function initCountdown() {
             }
         }, 1000);
     }
+    
+    // Initialize program-specific countdowns
+    initProgramCountdowns();
+}
+
+// ========== PROGRAM COUNTDOWNS ==========
+function initProgramCountdowns() {
+    const programItems = document.querySelectorAll('.program-item');
+    
+    if (programItems.length > 0) {
+        // Update every second
+        setInterval(function() {
+            const now = new Date();
+            
+            programItems.forEach(item => {
+                const timeStr = item.getAttribute('data-time');
+                if (!timeStr) return;
+                
+                // Parse time (format: "HH:MM")
+                const [hours, minutes] = timeStr.split(':').map(Number);
+                
+                // Create target datetime
+                const targetTime = new Date('2025-10-16');
+                targetTime.setHours(hours, minutes, 0, 0);
+                
+                const distance = targetTime - now;
+                
+                // Find the mini countdown elements
+                const daysEl = item.querySelector('.mini-value[data-type="days"]');
+                const hoursEl = item.querySelector('.mini-value[data-type="hours"]');
+                const minutesEl = item.querySelector('.mini-value[data-type="minutes"]');
+                const secondsEl = item.querySelector('.mini-value[data-type="seconds"]');
+                
+                if (!daysEl || !hoursEl || !minutesEl || !secondsEl) return;
+                
+                if (distance < 0) {
+                    // Event has passed
+                    daysEl.textContent = '00';
+                    hoursEl.textContent = '00';
+                    minutesEl.textContent = '00';
+                    secondsEl.textContent = '00';
+                    
+                    // Change color to gray
+                    const countdownMini = item.querySelector('.program-countdown-mini');
+                    if (countdownMini) {
+                        const items = countdownMini.querySelectorAll('.mini-countdown-item');
+                        items.forEach(el => {
+                            el.style.background = 'linear-gradient(135deg, #999, #666)';
+                        });
+                    }
+                } else {
+                    // Calculate time units
+                    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const mins = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const secs = Math.floor((distance % (1000 * 60)) / 1000);
+                    
+                    // Update display
+                    daysEl.textContent = formatNumber(days);
+                    hoursEl.textContent = formatNumber(hours);
+                    minutesEl.textContent = formatNumber(mins);
+                    secondsEl.textContent = formatNumber(secs);
+                }
+            });
+        }, 1000);
+    }
 }
 
 // Format number to always show 2 digits
