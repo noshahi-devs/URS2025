@@ -1978,9 +1978,9 @@ section {
 }
 
 .faq-question:hover {
-    background: var(--primary-green);
-    color: var(--white);
-}
+    color: var(--primary-gold);
+    
+    }
 
 .faq-question h4 {
     margin: 0;

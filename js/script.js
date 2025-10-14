@@ -225,6 +225,7 @@ function initGallery() {
     // Gallery filter buttons
     const filterBtns = document.querySelectorAll('.filter-btn');
     const galleryItems = document.querySelectorAll('.gallery-item');
+    const videoItems = document.querySelectorAll('.video-item');
     
     if (filterBtns.length > 0) {
         filterBtns.forEach(btn => {
@@ -238,7 +239,26 @@ function initGallery() {
                 
                 // Filter gallery items
                 galleryItems.forEach(item => {
-                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                    const categories = item.getAttribute('data-category').split(' ');
+                    if (filter === 'all' || categories.includes(filter)) {
+                        item.style.display = 'block';
+                        setTimeout(() => {
+                            item.style.opacity = '1';
+                            item.style.transform = 'scale(1)';
+                        }, 10);
+                    } else {
+                        item.style.opacity = '0';
+                        item.style.transform = 'scale(0.8)';
+                        setTimeout(() => {
+                            item.style.display = 'none';
+                        }, 300);
+                    }
+                });
+                
+                // Filter video items
+                videoItems.forEach(item => {
+                    const categories = item.getAttribute('data-category').split(' ');
+                    if (filter === 'all' || categories.includes(filter)) {
                         item.style.display = 'block';
                         setTimeout(() => {
                             item.style.opacity = '1';
